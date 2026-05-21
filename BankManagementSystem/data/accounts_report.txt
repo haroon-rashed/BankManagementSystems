@@ -1,0 +1,11 @@
+==================== NOVA BANK - ACCOUNTS REPORT ====================
+Generated: 21-05-2026 23:45
+
+Account No: CUR0000001
+Type: Current Account
+Owner: HaroonRasheed
+Balance: PKR 59999.00
+Overdraft Limit: PKR 12.00
+Transaction Fee: PKR 25.00
+Status: Active
+------------------------------------------------------------

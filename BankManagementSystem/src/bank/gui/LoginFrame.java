@@ -1,40 +1,40 @@
 package bank.gui;
-
+ 
 import bank.models.User;
 import bank.utils.BankService;
-
+ 
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
-
+ 
 public class LoginFrame extends JFrame {
-
+ 
     private BankService bankService;
     private JTabbedPane tabPane;
-
+ 
     private JTextField loginUserField;
     private JPasswordField loginPassField;
     private JLabel loginStatusLabel;
-
+ 
     private JTextField signupUserField, signupFullNameField, signupEmailField, signupPhoneField;
     private JPasswordField signupPassField, signupConfirmPassField;
     private JLabel signupStatusLabel;
-
+ 
     public LoginFrame() {
         bankService = BankService.getInstance();
         UITheme.applyGlobalLook();
         buildUI();
     }
-
+ 
     private void buildUI() {
-        setTitle("Nova Bank — Login");
+        setTitle("Nova Bank - Login");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1100, 720);
         setMinimumSize(new Dimension(900, 620));
         setLocationRelativeTo(null);
         setResizable(true);
-
+ 
         JPanel root = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -55,9 +55,9 @@ public class LoginFrame extends JFrame {
         setContentPane(root);
         setVisible(true);
     }
-
+ 
     // ==================== LEFT PANEL ====================
-
+ 
     private JPanel buildLeftPanel() {
         JPanel panel = new JPanel(new GridBagLayout()) {
             @Override
@@ -73,12 +73,12 @@ public class LoginFrame extends JFrame {
         };
         panel.setOpaque(false);
         panel.setPreferredSize(new Dimension(360, 0));
-
+ 
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         content.setOpaque(false);
         content.setBorder(new EmptyBorder(0, 30, 0, 30));
-
+ 
         JPanel logoCircle = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -98,19 +98,19 @@ public class LoginFrame extends JFrame {
         };
         logoCircle.setOpaque(false);
         logoCircle.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+ 
         JLabel bankName = UITheme.createLabel("NOVA BANK", UITheme.FONT_LOGO, UITheme.ACCENT);
         bankName.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+ 
         JLabel tagline = UITheme.createLabel("Your Trusted Financial Partner",
                 UITheme.FONT_BODY, UITheme.TEXT_MUTED);
         tagline.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+ 
         JSeparator sep = new JSeparator();
         sep.setForeground(new Color(255, 255, 255, 30));
         sep.setMaximumSize(new Dimension(260, 1));
         sep.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+ 
         content.add(logoCircle);
         content.add(Box.createVerticalStrut(14));
         content.add(bankName);
@@ -119,7 +119,7 @@ public class LoginFrame extends JFrame {
         content.add(Box.createVerticalStrut(18));
         content.add(sep);
         content.add(Box.createVerticalStrut(22));
-
+ 
         String[] features = {
             "  \u2713  Bank-grade Security",
             "  \u2713  Multi-Account Support",
@@ -134,17 +134,17 @@ public class LoginFrame extends JFrame {
             content.add(lbl);
             content.add(Box.createVerticalStrut(10));
         }
-
+ 
         panel.add(content);
         return panel;
     }
-
+ 
     // ==================== RIGHT PANEL ====================
-
+ 
     private JPanel buildRightPanel() {
         JPanel outer = new JPanel(new GridBagLayout());
         outer.setOpaque(false);
-
+ 
         JPanel card = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -161,13 +161,12 @@ public class LoginFrame extends JFrame {
         card.setBorder(new EmptyBorder(24, 36, 24, 36));
         card.setPreferredSize(new Dimension(500, 570));
         card.setMinimumSize(new Dimension(440, 500));
-
-        // ---- Tab pane with NO emoji, fixed-width tabs ----
+ 
         tabPane = new JTabbedPane(JTabbedPane.TOP);
         tabPane.setFont(new Font("Segoe UI", Font.BOLD, 14));
         tabPane.setOpaque(false);
         tabPane.setForeground(UITheme.TEXT_LIGHT);
-
+ 
         tabPane.setUI(new javax.swing.plaf.basic.BasicTabbedPaneUI() {
             @Override
             protected void installDefaults() {
@@ -185,7 +184,6 @@ public class LoginFrame extends JFrame {
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(isSelected ? UITheme.SECONDARY : new Color(255, 255, 255, 12));
                 g2.fillRoundRect(x + 3, y + 3, w - 6, h - 2, 8, 8);
-                // selected = white text, unselected = muted
                 g2.setColor(isSelected ? Color.WHITE : UITheme.TEXT_MUTED);
                 g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
                 FontMetrics fm = g2.getFontMetrics();
@@ -209,82 +207,76 @@ public class LoginFrame extends JFrame {
                 return 40;
             }
         });
-
+ 
         tabPane.addTab("LOGIN",   buildLoginTab());
         tabPane.addTab("SIGN UP", buildSignupTab());
-
+ 
         card.add(tabPane, BorderLayout.CENTER);
         outer.add(card);
         return outer;
     }
-
+ 
     // ==================== LOGIN TAB ====================
-
+ 
     private JPanel buildLoginTab() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setOpaque(false);
         p.setBorder(new EmptyBorder(18, 2, 8, 2));
-
+ 
         JLabel title = UITheme.createLabel("Welcome Back!", UITheme.FONT_H1, Color.WHITE);
         title.setAlignmentX(CENTER_ALIGNMENT);
+ 
         JLabel sub = UITheme.createLabel("Sign in to your account",
                 UITheme.FONT_BODY, UITheme.TEXT_MUTED);
         sub.setAlignmentX(CENTER_ALIGNMENT);
-
+ 
         loginUserField   = UITheme.createStyledTextField("Enter username");
         loginPassField   = UITheme.createStyledPasswordField("Enter password");
         loginStatusLabel = UITheme.createLabel(" ", UITheme.FONT_SMALL, UITheme.DANGER);
         loginStatusLabel.setAlignmentX(LEFT_ALIGNMENT);
-
+ 
         JButton loginBtn = UITheme.createAccentButton("Sign In");
         loginBtn.setAlignmentX(LEFT_ALIGNMENT);
         loginBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
         loginBtn.addActionListener(e -> doLogin());
-
+ 
         loginPassField.addKeyListener(new KeyAdapter() {
             @Override public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) doLogin();
             }
         });
-
-        JPanel hint = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 5));
-        hint.setOpaque(false);
-        hint.setBorder(BorderFactory.createLineBorder(new Color(26, 86, 219, 70), 1));
-        hint.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
-        hint.setAlignmentX(LEFT_ALIGNMENT);
-                UITheme.FONT_SMALL, UITheme.TEXT_MUTED));
-
+ 
         p.add(title);
         p.add(Box.createVerticalStrut(4));
         p.add(sub);
-        p.add(Box.createVerticalStrut(26));
+        p.add(Box.createVerticalStrut(30));
         addField(p, "Username", loginUserField);
-        p.add(Box.createVerticalStrut(14));
+        p.add(Box.createVerticalStrut(16));
         addField(p, "Password", loginPassField);
-        p.add(Box.createVerticalStrut(6));
+        p.add(Box.createVerticalStrut(8));
         p.add(loginStatusLabel);
-        p.add(Box.createVerticalStrut(18));
+        p.add(Box.createVerticalStrut(20));
         p.add(loginBtn);
-        p.add(Box.createVerticalStrut(14));
-        p.add(hint);
+ 
         return p;
     }
-
+ 
     // ==================== SIGNUP TAB ====================
-
+ 
     private JPanel buildSignupTab() {
         JPanel inner = new JPanel();
         inner.setLayout(new BoxLayout(inner, BoxLayout.Y_AXIS));
         inner.setOpaque(false);
         inner.setBorder(new EmptyBorder(18, 2, 12, 2));
-
+ 
         JLabel title = UITheme.createLabel("Create Account", UITheme.FONT_H1, Color.WHITE);
         title.setAlignmentX(CENTER_ALIGNMENT);
+ 
         JLabel sub = UITheme.createLabel("Join Nova Bank today",
                 UITheme.FONT_BODY, UITheme.TEXT_MUTED);
         sub.setAlignmentX(CENTER_ALIGNMENT);
-
+ 
         signupFullNameField    = UITheme.createStyledTextField("e.g. Ali Hassan");
         signupUserField        = UITheme.createStyledTextField("min 4 characters");
         signupEmailField       = UITheme.createStyledTextField("e.g. ali@email.com");
@@ -293,12 +285,12 @@ public class LoginFrame extends JFrame {
         signupConfirmPassField = UITheme.createStyledPasswordField("Re-enter password");
         signupStatusLabel      = UITheme.createLabel(" ", UITheme.FONT_SMALL, UITheme.DANGER);
         signupStatusLabel.setAlignmentX(LEFT_ALIGNMENT);
-
+ 
         JButton btn = UITheme.createPrimaryButton("Create Account");
         btn.setAlignmentX(LEFT_ALIGNMENT);
         btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
         btn.addActionListener(e -> doSignup());
-
+ 
         inner.add(title);
         inner.add(Box.createVerticalStrut(4));
         inner.add(sub);
@@ -319,7 +311,7 @@ public class LoginFrame extends JFrame {
         inner.add(Box.createVerticalStrut(14));
         inner.add(btn);
         inner.add(Box.createVerticalStrut(8));
-
+ 
         JScrollPane scroll = new JScrollPane(inner,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -327,15 +319,15 @@ public class LoginFrame extends JFrame {
         scroll.getViewport().setOpaque(false);
         scroll.setBorder(null);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
-
+ 
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.setOpaque(false);
         wrapper.add(scroll, BorderLayout.CENTER);
         return wrapper;
     }
-
+ 
     // ==================== HELPERS ====================
-
+ 
     private void addField(JPanel parent, String labelText, JComponent field) {
         JLabel lbl = UITheme.createLabel(labelText, UITheme.FONT_LABEL, UITheme.TEXT_MUTED);
         lbl.setAlignmentX(LEFT_ALIGNMENT);
@@ -345,7 +337,7 @@ public class LoginFrame extends JFrame {
         field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
         parent.add(field);
     }
-
+ 
     private void doLogin() {
         String user = loginUserField.getText().trim();
         String pass = new String(loginPassField.getPassword());
@@ -364,7 +356,7 @@ public class LoginFrame extends JFrame {
             loginPassField.setText("");
         }
     }
-
+ 
     private void doSignup() {
         String username = signupUserField.getText().trim();
         String fullName = signupFullNameField.getText().trim();
@@ -372,7 +364,7 @@ public class LoginFrame extends JFrame {
         String phone    = signupPhoneField.getText().trim();
         String pass     = new String(signupPassField.getPassword());
         String confirm  = new String(signupConfirmPassField.getPassword());
-
+ 
         if (username.isEmpty() || fullName.isEmpty() || email.isEmpty() || pass.isEmpty()) {
             setStatus(signupStatusLabel, "All fields are required.", UITheme.WARNING);
             return;
@@ -396,12 +388,12 @@ public class LoginFrame extends JFrame {
             setStatus(signupStatusLabel, ex.getMessage(), UITheme.DANGER);
         }
     }
-
+ 
     private void setStatus(JLabel lbl, String msg, Color color) {
         lbl.setText(msg);
         lbl.setForeground(color);
     }
-
+ 
     private void clearSignupFields() {
         signupUserField.setText(""); signupFullNameField.setText("");
         signupEmailField.setText(""); signupPhoneField.setText("");
