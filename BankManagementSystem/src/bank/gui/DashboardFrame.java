@@ -179,7 +179,7 @@ public class DashboardFrame extends JFrame {
         }
 
         sidebar.add(Box.createVerticalGlue());
-        JLabel ver = UITheme.createLabel("  Nova Bank © 2026", UITheme.FONT_SMALL, new Color(60,80,110));
+        JLabel ver = UITheme.createLabel("  Nova Bank © 2024", UITheme.FONT_SMALL, new Color(60,80,110));
         ver.setAlignmentX(LEFT_ALIGNMENT);
         sidebar.add(ver);
 
@@ -356,9 +356,9 @@ public class DashboardFrame extends JFrame {
         p.add(recentTitle);
         p.add(Box.createVerticalStrut(14));
 
-        List<Transaction> txList = bankService.getAllTransactions();
+        List<Transaction> txList = new ArrayList<>(bankService.getAllTransactions());
         int start = Math.max(0, txList.size() - 5);
-        List<Transaction> recent = txList.subList(start, txList.size());
+        List<Transaction> recent = new ArrayList<>(txList.subList(start, txList.size()));
         Collections.reverse(recent);
 
         JPanel txPanel = buildTransactionTable(recent);
@@ -810,7 +810,7 @@ public class DashboardFrame extends JFrame {
             String query = accField.getText().trim();
             List<Transaction> txs = query.isEmpty() ?
                     new ArrayList<>(bankService.getAllTransactions()) :
-                    bankService.getTransactions(query);
+                    new ArrayList<>(bankService.getTransactions(query));
             Collections.reverse(txs);
 
             String[] cols = {"TX ID", "Account", "Type", "Amount (PKR)", "Description", "Date/Time"};
